@@ -1,21 +1,22 @@
-package se.umu.c17mea.joystickgame.game.objects;
+package se.umu.c17mea.joystickgame.game.objects.creatures;
 
 import android.content.Context;
 
+import se.umu.c17mea.joystickgame.game.objects.CircleObject;
 import se.umu.c17mea.joystickgame.game.utils.VectorUtil;
 
-public class Enemy extends GameObject {
+public class Enemy extends CircleObject {
 
     private static final int RADIUS = 50;
     private static final int DETECT_RADIUS = 500;
     private static final int MAX_VELOCITY = 4;
 
     protected Enemy(Context context, double basePositionX, double basePositionY) {
-        super(context, basePositionX, basePositionY, RADIUS);
+        super(basePositionX, basePositionY, RADIUS);
     }
 
     public void update(double x, double y) {
-        if (inRange(x, y)) {
+        if (detects(x, y)) {
             move(x, y);
         }
     }
@@ -27,17 +28,7 @@ public class Enemy extends GameObject {
         basePositionY += vecNormalized[1]*MAX_VELOCITY;
     }
 
-    private boolean inRange(double x, double y) {
-        double distance = VectorUtil.distance(
-                basePositionX,
-                basePositionY,
-                x,
-                y
-        );
-
-        return distance < DETECT_RADIUS;
+    private boolean detects(double x, double y) {
+        return distance(x,y) < DETECT_RADIUS;
     }
-
-
-
 }

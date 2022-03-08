@@ -8,11 +8,6 @@ import se.umu.c17mea.joystickgame.game.utils.VectorUtil;
 public class VectorUtilTest {
 
     @Test
-    public void testDistance() {
-        Assert.assertTrue(VectorUtil.distance(50,50, 52, 57) < 10);
-    }
-
-    @Test
     public void testVectorNormalize() {
         double x = -5.0;
         double y = -4.123;

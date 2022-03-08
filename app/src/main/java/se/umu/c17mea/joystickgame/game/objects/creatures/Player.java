@@ -1,31 +1,22 @@
-package se.umu.c17mea.joystickgame.game.objects;
+package se.umu.c17mea.joystickgame.game.objects.creatures;
 
 import android.content.Context;
-import android.graphics.Canvas;
-import android.graphics.Paint;
 
 import androidx.core.content.ContextCompat;
 
 import se.umu.c17mea.joystickgame.R;
+import se.umu.c17mea.joystickgame.game.objects.CircleObject;
 import se.umu.c17mea.joystickgame.game.utils.VectorUtil;
 
-public class Player extends GameObject {
+public class Player extends CircleObject {
 
     private static final int RADIUS = 30;
     private static final int MAX_VELOCITY = 7;
 
     private double velocity;
 
-    private final Paint paint;
-
-    public Player(Context context, double posX, double posY) {
-        super(context, posX, posY, RADIUS);
-        this.paint = new Paint();
-        paint.setColor(ContextCompat.getColor(context, R.color.player));
-    }
-
-    public void draw(Canvas canvas) {
-        canvas.drawCircle((float) basePositionX, (float) basePositionY, RADIUS, paint);
+    public Player(Context context, double basePositionX, double basePositionY) {
+        super(basePositionX, basePositionY, RADIUS, ContextCompat.getColor(context, R.color.player));
     }
 
     /**

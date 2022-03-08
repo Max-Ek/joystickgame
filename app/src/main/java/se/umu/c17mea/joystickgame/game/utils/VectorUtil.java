@@ -4,17 +4,12 @@ public final class VectorUtil {
 
     private VectorUtil(){} // Do not instantiate.
 
-    public static double distance(double x1, double y1, double x2, double y2) {
-        return Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+    public static double[] toVector(double srcX, double srcY, double destX, double destY) {
+        return new double[] {destX - srcX, destY - srcY};
     }
 
     public static double[] vectorNormalize(double x, double y) {
         double sum = Math.abs(x) + Math.abs(y);
         return new double[] {x/sum, y/sum};
     }
-
-    public static double[] toVector(double srcX, double srcY, double destX, double destY) {
-        return new double[] {destX - srcX, destY - srcY};
-    }
-
 }

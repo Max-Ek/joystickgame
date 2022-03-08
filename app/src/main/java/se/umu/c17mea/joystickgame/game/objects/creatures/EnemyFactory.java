@@ -1,4 +1,4 @@
-package se.umu.c17mea.joystickgame.game.objects;
+package se.umu.c17mea.joystickgame.game.objects.creatures;
 
 import android.content.Context;
 import android.graphics.Rect;

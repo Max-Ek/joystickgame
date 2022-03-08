@@ -11,4 +11,6 @@
     <color name="player">#FF03DAC5</color>
     <color name="joystick_outer">#303030</color>
     <color name="joystick_inner">#909090</color>
+    <color name="shoot_button">#0000da</color>
+    <color name="shoot_button_pressed">#00008b</color>
 </resources>
