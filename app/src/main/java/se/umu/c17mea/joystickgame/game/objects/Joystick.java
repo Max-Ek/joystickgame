@@ -7,7 +7,7 @@ import android.graphics.Paint;
 import androidx.core.content.ContextCompat;
 
 import se.umu.c17mea.joystickgame.R;
-import se.umu.c17mea.joystickgame.game.utils.DistanceUtil;
+import se.umu.c17mea.joystickgame.game.utils.VectorUtil;
 
 public class Joystick extends GameObject {
 
@@ -57,16 +57,17 @@ public class Joystick extends GameObject {
             return true;
         }
 
-        double distance = DistanceUtil.distance(
+        double distance = VectorUtil.distance(
                 pressedPositionX,
-                basePositionX,
                 pressedPositionY,
+                basePositionX,
                 basePositionY
         );
 
         boolean steer = distance < baseRadius;
+
         if (steer) {
-            pressed = true;
+            pressed = true; // Only un-press through the reset method.
         }
 
         return steer;
@@ -79,14 +80,14 @@ public class Joystick extends GameObject {
      */
     public void setActuatorPosition(double x, double y) {
 
-        double distance = DistanceUtil.distance(x, basePositionX, y, basePositionY);
+        double distance = VectorUtil.distance(basePositionX, basePositionY, x, y);
 
         double deltaX = x - basePositionX;
         double deltaY = y - basePositionY;
 
         if (distance > baseRadius) { // If outside the boundary.
-            actuatorX = deltaX/distance;
-            actuatorY = deltaY/distance;
+            actuatorX = deltaX / distance;
+            actuatorY = deltaY / distance;
         } else { // Inside the boundary.
             actuatorX = deltaX / baseRadius;
             actuatorY = deltaY / baseRadius;

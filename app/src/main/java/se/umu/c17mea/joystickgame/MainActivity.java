@@ -16,7 +16,7 @@ import se.umu.c17mea.joystickgame.game.GameActivity;
  */
 public class MainActivity extends AppCompatActivity {
 
-    ActivityResultLauncher<Intent> gameLauncher;
+    private ActivityResultLauncher<Intent> gameLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

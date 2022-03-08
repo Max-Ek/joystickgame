@@ -3,6 +3,7 @@ package se.umu.c17mea.joystickgame.game;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -10,15 +11,25 @@ import android.view.SurfaceView;
 
 import androidx.annotation.NonNull;
 
+import java.util.ArrayList;
+
 import se.umu.c17mea.joystickgame.R;
+import se.umu.c17mea.joystickgame.game.objects.Enemy;
+import se.umu.c17mea.joystickgame.game.objects.EnemyFactory;
 import se.umu.c17mea.joystickgame.game.objects.Joystick;
 import se.umu.c17mea.joystickgame.game.objects.Player;
 
 public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
 
     private GameThread gameThread;
-    private Player player;
-    private Joystick leftJoystick;
+
+    private final Player player;
+    private final Joystick leftJoystick;
+    private final EnemyFactory enemyFactory;
+    private final ArrayList<Enemy> enemies;
+
+    private int spawnOnUpdate = 300;
+    private int updateCount;
 
     public GamePanel(Context context) {
         super(context);
@@ -29,6 +40,8 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         gameThread = new GameThread(this, getHolder());
         player = new Player(getContext(), 2*500,500);
         leftJoystick = new Joystick(getContext(),200, 800, 150);
+        enemyFactory = new EnemyFactory(getContext(), new Rect(0, 0, 2000, 1000));
+        enemies = new ArrayList<>();
     }
 
     @Override
@@ -72,64 +85,66 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void updateGame() {
+
+        /* Spawn enemies */
+        if (updateCount % spawnOnUpdate == 0) {
+            enemies.add(enemyFactory.randomPositionEnemy());
+        }
+
+        /* Move player */
         if (leftJoystick.getIsPressed()) {
             player.move(leftJoystick.getActuatorX(), leftJoystick.getActuatorY());
         } else {
             player.resetVelocity();
         }
         leftJoystick.updateInnerPosition();
+
+        /* Move enemies */
+        for (Enemy enemy : enemies) {
+            enemy.update(player.getBasePositionX(), player.getBasePositionY());
+        }
+
+        updateCount++;
     }
 
     @Override
     public void draw(Canvas canvas) {
         super.draw(canvas);
-        drawFPS(canvas);
-        drawUPS(canvas);
         player.draw(canvas);
+
+        for (Enemy enemy : enemies) {
+            enemy.draw(canvas);
+        }
+
         leftJoystick.draw(canvas);
-        drawActuatorX(canvas);
-        drawActuatorY(canvas);
-        drawVelocity(canvas);
+        drawInfo(canvas);
+
     }
 
-    private void drawUPS(Canvas canvas) {
-        String averageUPS = Double.toString(gameThread.getAverageUPS());
+    /**
+     * Draws info for debugging.
+     * @param canvas to draw
+     */
+    private void drawInfo(Canvas canvas) {
         Paint paint = new Paint();
         paint.setColor(getResources().getColor(R.color.teal_700));
         paint.setTextSize(50);
-        canvas.drawText("UPS: " + averageUPS, 100, 200, paint);
-    }
 
-    private void drawFPS(Canvas canvas) {
-        String averageFPS = Double.toString(gameThread.getAverageFPS());
-        Paint paint = new Paint();
-        paint.setColor(getResources().getColor(R.color.teal_700));
-        paint.setTextSize(50);
-        canvas.drawText("FPS: " + averageFPS, 100, 300, paint);
-    }
+        String[] strings = {
+                "UPS: " + gameThread.getAverageUPS(),
+                "FPS: " + gameThread.getAverageFPS(),
+                "ActuatorX: " + leftJoystick.getActuatorX(),
+                "ActuatorY: " + leftJoystick.getActuatorY(),
+                "Velocity: " + player.getVelocity(),
+                "Enemies: " + enemies.size()
+        };
 
-    private void drawActuatorX(Canvas canvas) {
-        String averageFPS = Double.toString(leftJoystick.getActuatorX());
-        Paint paint = new Paint();
-        paint.setColor(getResources().getColor(R.color.teal_700));
-        paint.setTextSize(50);
-        canvas.drawText("ActuatorX: " + averageFPS, 100, 400, paint);
-    }
+        int yPos = 100;
+        for (String str : strings) {
+            canvas.drawText(str, 100, yPos, paint);
+            yPos += 100;
+        }
 
-    private void drawActuatorY(Canvas canvas) {
-        String averageFPS = Double.toString(leftJoystick.getActuatorY());
-        Paint paint = new Paint();
-        paint.setColor(getResources().getColor(R.color.teal_700));
-        paint.setTextSize(50);
-        canvas.drawText("ActuatorY: " + averageFPS, 100, 500, paint);
-    }
-
-    private void drawVelocity(Canvas canvas) {
-        String averageFPS = Double.toString(player.getVelocity());
-        Paint paint = new Paint();
-        paint.setColor(getResources().getColor(R.color.teal_700));
-        paint.setTextSize(50);
-        canvas.drawText("Velocity: " + averageFPS, 100, 600, paint);
-    }
+    };
 
 }

@@ -7,12 +7,12 @@ import android.graphics.Paint;
 import androidx.core.content.ContextCompat;
 
 import se.umu.c17mea.joystickgame.R;
-import se.umu.c17mea.joystickgame.game.utils.DistanceUtil;
+import se.umu.c17mea.joystickgame.game.utils.VectorUtil;
 
 public class Player extends GameObject {
 
     private static final int RADIUS = 30;
-    private static final int MAX_VELOCITY = 5;
+    private static final int MAX_VELOCITY = 7;
 
     private double velocity;
 
@@ -37,7 +37,7 @@ public class Player extends GameObject {
 
         // Avoid exceeding MAX_VELOCITY for diagonal movement.
         if (Math.abs(actuatorX) + Math.abs(actuatorY) > 1) {
-            double[] res = DistanceUtil.vectorNormalize(actuatorX, actuatorY);
+            double[] res = VectorUtil.vectorNormalize(actuatorX, actuatorY);
             actuatorX = res[0];
             actuatorY = res[1];
         }
@@ -47,19 +47,6 @@ public class Player extends GameObject {
         basePositionX += velocityX;
         basePositionY += velocityY;
         velocity = Math.abs(velocityX)+Math.abs(velocityY);
-    }
-
-    /**
-     * Moves in the assigned direction,
-     * NOTE: only moves at MAX_VELOCITY.
-     * @param actuatorX -1 to 1
-     * @param actuatorY -1 to 1
-     */
-    public void move_vector_normalized(float actuatorX, float actuatorY) {
-        float sum = Math.abs(actuatorX) + Math.abs(actuatorY);
-        basePositionX += (actuatorX/sum)*MAX_VELOCITY;
-        basePositionY += (actuatorY/sum)*MAX_VELOCITY;
-        velocity = (Math.abs(actuatorX)/sum + Math.abs(actuatorY)/sum)*MAX_VELOCITY;
     }
 
     public double getVelocity() {
