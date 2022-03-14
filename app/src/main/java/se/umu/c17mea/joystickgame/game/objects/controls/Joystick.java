@@ -11,12 +11,12 @@ import se.umu.c17mea.joystickgame.game.utils.VectorUtil;
 
 public class Joystick extends ControlObject {
 
+    /** Size of the inner circle. */
+    public final static double innerRadius = 50;
+
     /** State of the joystick */
     private double innerPosX, innerPosY;
     private double actuatorX, actuatorY;
-
-    /** Size of the inner circle. */
-    private final static double innerRadius = 50;
 
     /** Paint */
     private final Paint innerPaint;
@@ -29,7 +29,8 @@ public class Joystick extends ControlObject {
      * @param outerRadius radius
      */
     public Joystick(Context context, double basePositionX, double basePositionY, double outerRadius) {
-        super(basePositionX, basePositionY, outerRadius, ContextCompat.getColor(context, R.color.joystick_outer));
+        super(basePositionX, basePositionY, outerRadius,
+                ContextCompat.getColor(context, R.color.joystick_outer));
         innerPosX = basePositionX;
         innerPosY = basePositionY;
 

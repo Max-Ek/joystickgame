@@ -2,6 +2,8 @@ package se.umu.c17mea.joystickgame.game.objects;
 
 import android.graphics.Canvas;
 
+import se.umu.c17mea.joystickgame.game.utils.VectorUtil;
+
 public abstract class GameObject {
 
     protected double basePositionX, basePositionY;
@@ -22,13 +24,20 @@ public abstract class GameObject {
     }
 
     public double distance(double x, double y) {
-        return Math.sqrt(Math.pow(x - basePositionX, 2) + Math.pow(y - basePositionY, 2));
+        return VectorUtil.euclideanDistance(
+                this.basePositionX,
+                this.basePositionY,
+                x,
+                y
+        );
     }
 
     public double distance(GameObject gameObject) {
-        return Math.sqrt(
-                Math.pow(gameObject.getBasePositionX() - basePositionX, 2)
-                + Math.pow(gameObject.getBasePositionY() - basePositionY, 2)
+        return VectorUtil.euclideanDistance(
+                this.basePositionX,
+                this.basePositionY,
+                gameObject.getBasePositionX(),
+                gameObject.getBasePositionY()
         );
     }
 }

@@ -13,8 +13,10 @@ public class Button extends ControlObject {
     private final Paint pressedPaint;
 
     public Button(Context context, double basePositionX, double basePositionY, double radius) {
-        super(basePositionX, basePositionY, radius, ContextCompat.getColor(context, R.color.shoot_button));
+        super(basePositionX, basePositionY, radius,
+                ContextCompat.getColor(context, R.color.shoot_button));
         pressedPaint = new Paint();
+        paint.setAlpha(255/2);
         pressedPaint.setColor(ContextCompat.getColor(context, R.color.shoot_button_pressed));
     }
 

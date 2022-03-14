@@ -60,8 +60,10 @@ public class GameThread extends Thread {
                 }
             }
 
-            /* Sleep if there's spare time in the frame. */
+            elapsedTime = System.currentTimeMillis() - startTime;
             sleepTime = (long) (updateCount*UPS_PERIOD - elapsedTime);
+
+            /* Sleep if there's spare time in the frame. */
             if (sleepTime > 0) {
                 try {
                     sleep(sleepTime);
@@ -85,7 +87,6 @@ public class GameThread extends Thread {
                 averageFPS = frameCount / (elapsedTime / 1000.0);
                 updateCount = 0;
                 frameCount = 0;
-                elapsedTime = 0;
                 startTime = System.currentTimeMillis();
             }
 
