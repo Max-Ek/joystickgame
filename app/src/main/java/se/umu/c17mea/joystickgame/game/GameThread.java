@@ -43,12 +43,18 @@ public class GameThread extends Thread {
         while (running) {
             Canvas canvas = null;
 
-            /* Try to update and draw the game */
+            /* Update the game */
+            gamePanel.updateGame();
+            updateCount++;
+
+            if (!running) {
+                break;
+            }
+
+            // Try to draw
             try {
                 canvas = surfaceHolder.lockCanvas(); // Lock the canvas from other threads.
                 synchronized (surfaceHolder) {
-                    gamePanel.updateGame();
-                    updateCount++;
                     gamePanel.draw(canvas);
                 }
             } catch (Exception e) {
@@ -73,7 +79,7 @@ public class GameThread extends Thread {
             }
 
             /* If behind on time, catch up without rendering frames. */
-            while (sleepTime < 0 && updateCount < MAX_UPS) {
+            while (sleepTime < 0 && updateCount < MAX_UPS && running) {
                 gamePanel.updateGame();
                 updateCount++;
                 elapsedTime = System.currentTimeMillis() - startTime;

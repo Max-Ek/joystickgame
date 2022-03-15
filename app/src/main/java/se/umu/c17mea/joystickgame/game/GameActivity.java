@@ -1,15 +1,15 @@
 package se.umu.c17mea.joystickgame.game;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.view.WindowManager;
 
-import java.util.Objects;
+import se.umu.c17mea.joystickgame.R;
 
 /**
  * The game activity.
@@ -23,10 +23,13 @@ public class GameActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         hideSystemBars();
-        getSupportActionBar().hide();
+
+        Intent intent = getIntent();
+        boolean turbo = intent.getBooleanExtra(getString(R.string.turbo_key), false);
 
         // Create the game panel.
         gamePanel = new GamePanel(this);
+        gamePanel.setTurbo(turbo);
         setContentView(gamePanel);
     }
 
@@ -44,9 +47,9 @@ public class GameActivity extends AppCompatActivity {
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
     }
 
-
     @Override
-    protected void onResume() {
-        super.onResume();
+    protected void onDestroy() {
+        super.onDestroy();
     }
+
 }

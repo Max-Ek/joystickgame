@@ -1,16 +1,15 @@
 package se.umu.c17mea.joystickgame.game.map;
 
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Rect;
-import android.util.Log;
 
 import se.umu.c17mea.joystickgame.game.graphics.DisplayWindow;
 import se.umu.c17mea.joystickgame.game.graphics.Sprite;
 
 public class TileMap {
 
+    /** Tile types */
 
     /** Tile size */
     public static final int TILE_SIZE = 32;
@@ -76,15 +75,12 @@ public class TileMap {
     }
 
     public void draw(Canvas canvas, DisplayWindow displayWindow) {
-        long start = System.currentTimeMillis();
         canvas.drawBitmap(
                 bitmap,
                 -displayWindow.getRect().left,
                 -displayWindow.getRect().top,
                 null
         );
-        long end = System.currentTimeMillis() - start;
-        Log.d("Time: ", "" +end);
     }
 
     public Rect getSize() {
@@ -94,6 +90,18 @@ public class TileMap {
                 TILE_SIZE * MAP_WIDTH * SCALING,
                 TILE_SIZE * MAP_HEIGHT * SCALING
         );
+    }
+
+    public int getTileType(int x, int y) {
+        return (layout[y/SCALING/TILE_SIZE][x/SCALING/TILE_SIZE]);
+    }
+
+    public boolean insideMap(int x, int y) {
+        return getSize().contains(x, y);
+    }
+
+    public boolean onIce(int x, int y) {
+        return getTileType(x,y) == 1;
     }
 
 }

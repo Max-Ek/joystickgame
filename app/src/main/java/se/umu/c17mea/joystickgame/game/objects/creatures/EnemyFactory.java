@@ -5,7 +5,6 @@ import android.graphics.Rect;
 
 import java.util.Random;
 
-import se.umu.c17mea.joystickgame.game.graphics.Animation;
 import se.umu.c17mea.joystickgame.game.graphics.AnimationFactory;
 
 public class EnemyFactory {

@@ -1,0 +1,28 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--
+    <PreferenceCategory app:title="@string/display_header">
+
+        <EditTextPreference
+            app:key="signature"
+            app:title="@string/color_title"
+            app:useSimpleSummaryProvider="true" />
+
+    </PreferenceCategory>
+    -->
+
+    <PreferenceCategory app:title="@string/game_header">
+
+        <SwitchPreferenceCompat
+            app:title="@string/turbo_title"
+            app:key="@string/turbo_key"
+            app:summaryOff="Makes you really fast"
+            app:summaryOn="Makes you really fast"/>
+
+        <Preference
+            app:title="@string/reset_title"
+            app:key="@string/reset_key"/>
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

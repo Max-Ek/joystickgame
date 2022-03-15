@@ -3,8 +3,14 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/m/Desktop/universitet/mobila_applikationer/joystickgame/app/src/main/res/drawable/ic_baseline_help_24.xml" value="0.192" />
+        <entry key="..\:/Users/m/Desktop/universitet/mobila_applikationer/joystickgame/app/src/main/res/drawable/ic_round_settings_24.xml" value="0.192" />
         <entry key="..\:/Users/m/Desktop/universitet/mobila_applikationer/joystickgame/app/src/main/res/layout/activity_game.xml" value="0.358695652173913" />
         <entry key="..\:/Users/m/Desktop/universitet/mobila_applikationer/joystickgame/app/src/main/res/layout/activity_main.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/m/Desktop/universitet/mobila_applikationer/joystickgame/app/src/main/res/layout/fragment_help.xml" value="0.2" />
+        <entry key="..\:/Users/m/Desktop/universitet/mobila_applikationer/joystickgame/app/src/main/res/layout/fragment_main.xml" value="0.18385416666666668" />
+        <entry key="..\:/Users/m/Desktop/universitet/mobila_applikationer/joystickgame/app/src/main/res/menu/mainmenu.xml" value="0.67" />
+        <entry key="..\:/Users/m/Desktop/universitet/mobila_applikationer/joystickgame/app/src/main/res/xml/root_preferences.xml" value="0.33" />
       </map>
     </option>
   </component>

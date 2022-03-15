@@ -5,6 +5,8 @@ import android.graphics.Canvas;
 
 import androidx.core.content.ContextCompat;
 
+import java.util.Vector;
+
 import se.umu.c17mea.joystickgame.R;
 import se.umu.c17mea.joystickgame.game.graphics.Animation;
 import se.umu.c17mea.joystickgame.game.objects.CircleObject;
@@ -13,8 +15,7 @@ import se.umu.c17mea.joystickgame.game.utils.VectorUtil;
 public class Player extends CircleObject {
 
     public static final int RADIUS = 64;
-    public static final int MAX_VELOCITY = 16;
-
+    public static final int DEFAULT_MAX_VELOCITY = 16;
 
     private final Animation animation;
     private static final int WALK_ANIMATION_RATE = 10;
@@ -25,6 +26,7 @@ public class Player extends CircleObject {
     private static final int FIRING_RATE = 15;
     private long shootTimer = 0;
 
+    private int maxVelocity = 16;
     private double velocityX;
     private double velocityY;
     private double direction;
@@ -54,6 +56,16 @@ public class Player extends CircleObject {
         animation.draw(canvas, this);
     }
 
+    public void slide() {
+        double[] vec = VectorUtil.toVector(direction);
+        double[] vecNormalized = VectorUtil.normalize(vec[0], vec[1]);
+        velocityX = vecNormalized[0] * maxVelocity;
+        velocityY = vecNormalized[1] * maxVelocity;
+        basePositionX += velocityX;
+        basePositionY += velocityY;
+        state = PlayerState.IDLE;
+    }
+
     /**
      * Attempts to move in the direction specified.
      * @param actuatorX -1 to 1
@@ -70,8 +82,8 @@ public class Player extends CircleObject {
             actuatorY = res[1];
         }
 
-        velocityX = actuatorX*MAX_VELOCITY;
-        velocityY = actuatorY*MAX_VELOCITY;
+        velocityX = actuatorX * maxVelocity;
+        velocityY = actuatorY * maxVelocity;
         basePositionX += velocityX;
         basePositionY += velocityY;
         direction = VectorUtil.vectorAngle(velocityX, velocityY);
@@ -95,6 +107,18 @@ public class Player extends CircleObject {
 
     public double getDirection() {
         return direction;
+    }
+
+    public void setTurbo(boolean turbo) {
+        if (turbo) {
+            maxVelocity = DEFAULT_MAX_VELOCITY * 2;
+        } else {
+            maxVelocity = DEFAULT_MAX_VELOCITY;
+        }
+    }
+
+    public void setState(PlayerState state) {
+        this.state = state;
     }
 
     public PlayerState getState() {

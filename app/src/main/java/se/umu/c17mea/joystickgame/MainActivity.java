@@ -1,63 +1,88 @@
 package se.umu.c17mea.joystickgame;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
-
-import se.umu.c17mea.joystickgame.game.GameActivity;
+import android.view.Menu;
+import android.view.MenuItem;
 
 /**
  * The start screen before the game.
  */
 public class MainActivity extends AppCompatActivity {
 
-    private ActivityResultLauncher<Intent> gameLauncher;
+    private Toolbar toolbar;
+    private NavController navController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        NavHostFragment navHostFragment =
+                (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
+        navController = navHostFragment.getNavController();
+        AppBarConfiguration appBarConfiguration =
+                new AppBarConfiguration.Builder(navController.getGraph()).build();
+        toolbar = findViewById(R.id.toolbar);
+
+
+        setSupportActionBar(toolbar);
+        NavigationUI.setupWithNavController(
+                toolbar,
+                navController,
+                appBarConfiguration
+        );
+
+
         hideSystemBars();
+    }
 
-        // Setup listeners.
-        setupStartGameListener();
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.mainmenu, menu);
+        return true;
+    }
 
-        // Look for activity results.
-        gameLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes.
-                        Intent data = result.getData();
-                        // TODO use the result data.
-                    }
-                }
-        );
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.settings_button) {
+            openSettingsFragment();
+        } else if (item.getItemId() == R.id.help_button) {
+            openHelpFragment();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onSupportNavigateUp() {
+        return navController.navigateUp() || super.onSupportNavigateUp();
     }
 
     /**
-     * Sets up start game button listener.
+     * Opens the settings fragment.
      */
-    private void setupStartGameListener() {
-        findViewById(R.id.start_button).setOnClickListener(
-                view -> openGameActivityForResult()
-        );
+    public void openSettingsFragment() {
+        Navigation.findNavController(this, R.id.nav_host_fragment)
+                .navigate(R.id.action_mainFragment_to_settingsFragment4);
     }
 
     /**
-     * Launches the game activity.
+     * Opens the help fragment.
      */
-    private void openGameActivityForResult() {
-        Intent intent = new Intent(this, GameActivity.class);
-        gameLauncher.launch(intent);
+    public void openHelpFragment() {
+        Navigation.findNavController(this, R.id.nav_host_fragment)
+                .navigate(R.id.action_mainFragment_to_helpFragment);
     }
 
     private void hideSystemBars() {
@@ -70,6 +95,7 @@ public class MainActivity extends AppCompatActivity {
         windowInsetsController.setSystemBarsBehavior(
                 WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         );
+
         // Hide both the status bar and the navigation bar
         windowInsetsController.hide(WindowInsetsCompat.Type.systemBars());
     }
