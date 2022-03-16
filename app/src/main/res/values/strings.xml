@@ -1,8 +1,11 @@
 <resources>
     <string name="app_name">Revenge Day</string>
-    <string name="start_game"><b>Start Game</b></string>
     <string name="help">Help</string>
     <string name="settings">Settings</string>
+
+    <!-- Main fragment -->
+    <string name="start_game"><b>Start Game</b></string>
+    <string name="high_score">High Score:\n %d Ghosts Killed</string>
 
     <!-- Preference Titles -->
     <string name="display_header">Display Settings</string>
@@ -27,6 +30,5 @@
     <!-- Shared Preferences -->
     <string name="preference_file_key">se.umu.c17mea.joystickgame.PREFERENCE_FILE_KEY</string>
     <string name="preference_file_key_ghosts">GHOSTS_KILLED</string>
-    <string name="high_score">High Score: %d</string>
 
 </resources>
