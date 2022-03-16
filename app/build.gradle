@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        release {
+            storeFile file('C:\\Users\\m\\Desktop\\universitet\\mobila_applikationer\\keystore\\revenge_key.jks')
+            storePassword 'circleman'
+            keyPassword 'circleman'
+            keyAlias 'key0'
+        }
+    }
     compileSdk 31
 
     defaultConfig {
