@@ -11,10 +11,17 @@ import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+/**
+ * Fragment for displaying help information.
+ *
+ * @author c17mea
+ * @version 1.0
+ * @since 2022-03-16
+ */
 public class HelpFragment extends Fragment {
 
     /**
-     * Empty constructor.
+     * Empty constructor required.
      */
     public HelpFragment() {
 

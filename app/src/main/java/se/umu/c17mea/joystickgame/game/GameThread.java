@@ -3,31 +3,45 @@ package se.umu.c17mea.joystickgame.game;
 import android.graphics.Canvas;
 import android.view.SurfaceHolder;
 
+/**
+ * Game thread responsible for calling game update and draw.
+ * Uses frame pacing to avoid lag spikes.
+ *
+ * @author c17mea
+ * @version 1.0
+ * @since 2022-03-16
+ */
 public class GameThread extends Thread {
 
+    /** Tries to avoid exceeding this value of UPS. */
     public static final float MAX_UPS = 60;
     public static final float UPS_PERIOD = 1000/MAX_UPS;
 
-    private final GamePanel gamePanel;
+    /** Game to update. */
+    private final Game game;
+
+    /** SurfaceHolder to get canvas from. */
     private final SurfaceHolder surfaceHolder;
 
+    /** Thread state. */
     private volatile boolean running = false;
 
-    private double averageFPS;
+    /** Average UPS/FPS values. */
     private double averageUPS;
+    private double averageFPS;
 
     /**
      * Constructor.
-     * @param gamePanel to draw and update
+     * @param game to draw and update
      * @param surfaceHolder to get and lock canvas
      */
-    public GameThread(GamePanel gamePanel, SurfaceHolder surfaceHolder) {
-        this.gamePanel = gamePanel;
+    public GameThread(Game game, SurfaceHolder surfaceHolder) {
+        this.game = game;
         this.surfaceHolder = surfaceHolder;
     }
 
     /**
-     * The game loop with frame pacing.
+     * Starts the game loop with frame pacing.
      */
     @Override
     public void run() {
@@ -44,7 +58,7 @@ public class GameThread extends Thread {
             Canvas canvas = null;
 
             /* Update the game */
-            gamePanel.updateGame();
+            game.updateGame();
             updateCount++;
 
             if (!running) {
@@ -55,7 +69,7 @@ public class GameThread extends Thread {
             try {
                 canvas = surfaceHolder.lockCanvas(); // Lock the canvas from other threads.
                 synchronized (surfaceHolder) {
-                    gamePanel.draw(canvas);
+                    game.draw(canvas);
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -80,7 +94,7 @@ public class GameThread extends Thread {
 
             /* If behind on time, catch up without rendering frames. */
             while (sleepTime < 0 && updateCount < MAX_UPS && running) {
-                gamePanel.updateGame();
+                game.updateGame();
                 updateCount++;
                 elapsedTime = System.currentTimeMillis() - startTime;
                 sleepTime = (long) (updateCount*UPS_PERIOD - elapsedTime);

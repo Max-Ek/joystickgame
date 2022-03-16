@@ -1,6 +1,5 @@
 package se.umu.c17mea.joystickgame;
 
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -10,6 +9,13 @@ import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
+/**
+ * Fragment for displaying and editing the settings.
+ *
+ * @author c17mea
+ * @version 1.0
+ * @since 2022-03-16
+ */
 public class SettingsFragment extends PreferenceFragmentCompat {
 
     @Override

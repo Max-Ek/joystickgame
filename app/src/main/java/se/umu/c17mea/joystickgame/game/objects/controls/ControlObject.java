@@ -2,14 +2,35 @@ package se.umu.c17mea.joystickgame.game.objects.controls;
 
 import se.umu.c17mea.joystickgame.game.objects.CircleObject;
 
+/**
+ * Super class for game control objects that are formed like a circle.
+ *
+ * @author c17mea
+ * @version 1.0
+ * @since 2022-03-16
+ */
 public abstract class ControlObject extends CircleObject {
 
+    /** If the object is pressed. */
     protected boolean pressed;
 
+    /**
+     * Constructor.
+     * @param basePositionX position
+     * @param basePositionY position
+     * @param radius size
+     */
     ControlObject(double basePositionX, double basePositionY, double radius) {
         super(basePositionX, basePositionY, radius);
     }
 
+    /**
+     * Constructor with color.
+     * @param basePositionX position
+     * @param basePositionY position
+     * @param radius size
+     * @param color color
+     */
     protected ControlObject(double basePositionX, double basePositionY, double radius, int color) {
         super(basePositionX, basePositionY, radius, color);
     }

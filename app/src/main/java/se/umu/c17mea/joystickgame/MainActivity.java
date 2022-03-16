@@ -17,11 +17,18 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 /**
- * The start screen before the game.
+ * The main activity of the application.
+ *
+ * @author c17mea
+ * @version 1.0
+ * @since 2022-03-16
  */
 public class MainActivity extends AppCompatActivity {
 
+    /** ToolBar. */
     private Toolbar toolbar;
+
+    /** Navigation Controller. */
     private NavController navController;
 
     @Override
@@ -29,14 +36,15 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Setup the navigation controller.
         NavHostFragment navHostFragment =
                 (NavHostFragment) getSupportFragmentManager().findFragmentById(R.id.nav_host_fragment);
         navController = navHostFragment.getNavController();
         AppBarConfiguration appBarConfiguration =
                 new AppBarConfiguration.Builder(navController.getGraph()).build();
+
+        // Setup the ToolBar.
         toolbar = findViewById(R.id.toolbar);
-
-
         setSupportActionBar(toolbar);
         NavigationUI.setupWithNavController(
                 toolbar,
@@ -44,7 +52,7 @@ public class MainActivity extends AppCompatActivity {
                 appBarConfiguration
         );
 
-
+        // Go full screen.
         hideSystemBars();
     }
 
@@ -85,6 +93,9 @@ public class MainActivity extends AppCompatActivity {
                 .navigate(R.id.action_mainFragment_to_helpFragment);
     }
 
+    /**
+     * Hides the system bars.
+     */
     private void hideSystemBars() {
         WindowInsetsControllerCompat windowInsetsController =
                 ViewCompat.getWindowInsetsController(getWindow().getDecorView());

@@ -22,8 +22,12 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="12dp"
         android:text="@string/high_score"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:layout_constraintBottom_toTopOf="@+id/start_button"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

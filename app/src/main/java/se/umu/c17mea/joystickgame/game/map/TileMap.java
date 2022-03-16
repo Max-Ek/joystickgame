@@ -7,27 +7,36 @@ import android.graphics.Rect;
 import se.umu.c17mea.joystickgame.game.graphics.DisplayWindow;
 import se.umu.c17mea.joystickgame.game.graphics.Sprite;
 
+/**
+ * Class representing the background map in the game.
+ *
+ * @author c17mea
+ * @version 1.0
+ * @since 2022-03-16
+ */
 public class TileMap {
 
-    /** Tile types */
+    /** Tile types. */
+    public static final int TYPE_GROUND = 0;
+    public static final int TYPE_ICE = 1;
 
-    /** Tile size */
+    /** Tile size. */
     public static final int TILE_SIZE = 32;
     public static final int SCALING = 10;
 
-    /** Amount of tiles */
+    /** Amount of tiles. */
     public static final int MAP_WIDTH = 8;
     public static final int MAP_HEIGHT = 8;
 
+    /** Map layout. */
     private int[][] layout;
+
+    /** Sprites. */
     private final Sprite[] sprites;
     private Bitmap bitmap;
 
-    private Rect dest;
-
     public TileMap(Sprite[] sprites) {
         this.sprites = sprites;
-        this.dest = new Rect();
         init();
     }
 
@@ -49,6 +58,7 @@ public class TileMap {
 
     /**
      * Initializes the map to a bitmap.
+     * Scales it with SCALING.
      */
     private void init() {
 
@@ -74,6 +84,11 @@ public class TileMap {
         );
     }
 
+    /**
+     * Draws the map.
+     * @param canvas to draw on
+     * @param displayWindow part to draw
+     */
     public void draw(Canvas canvas, DisplayWindow displayWindow) {
         canvas.drawBitmap(
                 bitmap,
@@ -83,6 +98,10 @@ public class TileMap {
         );
     }
 
+    /**
+     * Gets the size of the map.
+     * @return size rect
+     */
     public Rect getSize() {
         return new Rect(
                 0,
@@ -92,16 +111,34 @@ public class TileMap {
         );
     }
 
+    /**
+     * Gets the tile type at position (x,y).
+     * @param x position
+     * @param y position
+     * @return tile type
+     */
     public int getTileType(int x, int y) {
         return (layout[y/SCALING/TILE_SIZE][x/SCALING/TILE_SIZE]);
     }
 
+    /**
+     * Checks if the point (x,y) is inside the map.
+     * @param x position
+     * @param y position
+     * @return inside map bool
+     */
     public boolean insideMap(int x, int y) {
         return getSize().contains(x, y);
     }
 
+    /**
+     * Checks if the point (x,y) is inside an ice tile.
+     * @param x position
+     * @param y position
+     * @return point on ice tile bool
+     */
     public boolean onIce(int x, int y) {
-        return getTileType(x,y) == 1;
+        return getTileType(x,y) == TYPE_ICE;
     }
 
 }

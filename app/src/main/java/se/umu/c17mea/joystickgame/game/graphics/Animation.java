@@ -6,10 +6,22 @@ import se.umu.c17mea.joystickgame.game.objects.creatures.Enemy;
 import se.umu.c17mea.joystickgame.game.objects.creatures.Player;
 import se.umu.c17mea.joystickgame.game.objects.creatures.Projectile;
 
+/**
+ * Class for drawing animations.
+ *
+ * @author c17mea
+ * @version 1.0
+ * @since 2022-03-16
+ */
 public class Animation {
 
+    /** This animations sprite objects */
     private final Sprite[] sprites;
 
+    /**
+     * Constructor.
+     * @param sprites related.
+     */
     public Animation(Sprite[] sprites) {
         this.sprites = sprites;
     }
@@ -41,6 +53,11 @@ public class Animation {
         }
     }
 
+    /**
+     * Draws the enemy animation.
+     * @param canvas to draw on
+     * @param enemy to draw
+     */
     public void draw(Canvas canvas, Enemy enemy) {
         switch (enemy.getState()) {
             case IDLE:
@@ -52,6 +69,11 @@ public class Animation {
         }
     }
 
+    /**
+     * Draws the projectile animation.
+     * @param canvas to draw on
+     * @param projectile to draw
+     */
     public void draw(Canvas canvas, Projectile projectile) {
         int x = (int) projectile.getBasePositionX();
         int y = (int) projectile.getBasePositionY();

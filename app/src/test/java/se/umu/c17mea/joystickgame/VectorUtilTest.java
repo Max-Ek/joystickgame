@@ -9,6 +9,9 @@ import se.umu.c17mea.joystickgame.game.utils.VectorUtil;
 
 public class VectorUtilTest {
 
+    /**
+     * Tests normalize().
+     */
     @Test
     public void testVectorNormalize() {
         double x = -5.0;
@@ -18,6 +21,9 @@ public class VectorUtilTest {
         Assert.assertTrue(Math.abs(res[0]) + Math.abs(res[1]) < 1.01);
     }
 
+    /**
+     * Tests positions to vector (toVector()).
+     */
     @Test
     public void testToVector() {
         double[] vec = VectorUtil.toVector(50,50, 52, 57);

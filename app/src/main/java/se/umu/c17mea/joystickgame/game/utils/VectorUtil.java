@@ -1,5 +1,12 @@
 package se.umu.c17mea.joystickgame.game.utils;
 
+/**
+ * Util class for vector calculations.
+ *
+ * @author c17mea
+ * @version 1.0
+ * @since 2022-03-16
+ */
 public final class VectorUtil {
 
     private VectorUtil(){} // Do not instantiate.

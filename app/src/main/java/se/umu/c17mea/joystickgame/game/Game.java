@@ -16,7 +16,6 @@ import androidx.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-import se.umu.c17mea.joystickgame.R;
 import se.umu.c17mea.joystickgame.game.graphics.AnimationFactory;
 import se.umu.c17mea.joystickgame.game.graphics.DisplayWindow;
 import se.umu.c17mea.joystickgame.game.graphics.SpriteSheet;
@@ -30,54 +29,67 @@ import se.umu.c17mea.joystickgame.game.objects.creatures.Player;
 import se.umu.c17mea.joystickgame.game.objects.creatures.PlayerState;
 import se.umu.c17mea.joystickgame.game.objects.creatures.Projectile;
 
-public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
+/**
+ * The game controller class.
+ *
+ * Starts the game thread,
+ * handles touch events,
+ * handles game model,
+ * calls draw methods.
+ *
+ * @author c17mea
+ * @version 1.0
+ * @since 2022-03-16
+ */
+public class Game extends SurfaceView implements SurfaceHolder.Callback {
 
+    /** Player start position. */
     private static final double START_X = 320;
     private static final double START_Y = 320;
 
-    /** Game thread */
+    /** Game thread. */
     private GameThread gameThread;
 
-    /** Scores */
+    /** Scores. */
     private int deadGhosts;
     private int coins;
 
-    /** Game Over */
+    /** Game Over. */
     private boolean gameOver;
     private int gameOverTime = 60*4;
     private int gameOverCounter = 0;
 
-    /** Display Window */
+    /** Display Window. */
     private DisplayMetrics displayMetrics;
     private DisplayWindow displayWindow;
 
-    /** TileMap */
+    /** TileMap. */
     private final TileMap tileMap;
 
-    /** Controls */
+    /** Controls. */
     private final Joystick leftJoystick;
     private final Button shootButton;
     private int leftJoystickID = -1;
     private int shootButtonID = -1;
 
-    /** Creatures */
+    /** Creatures. */
     private final Player player;
     private final ArrayList<Enemy> enemies;
     private final ArrayList<Projectile> projectiles;
 
-    /** Spawns */
+    /** Spawns. */
     private final EnemyFactory enemyFactory;
     private int spawnOnUpdate = 120;
     private int updateCount = 0;
 
-    /** Sprites & Animations */
+    /** Sprites & Animations. */
     private final SpriteSheet spriteSheet;
     private final AnimationFactory animationFactory;
 
-    /** Drawing text */
+    /** Drawing text. */
     private final Paint textPaint;
 
-    public GamePanel(Context context) {
+    public Game(Context context) {
         super(context);
 
         textPaint = new Paint();
@@ -95,10 +107,19 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         spriteSheet = new SpriteSheet(getContext());
         animationFactory = new AnimationFactory(getContext(), spriteSheet);
 
+        leftJoystick = new Joystick(getContext(),
+                100 + 150,
+                displayMetrics.heightPixels - 150 - 100,
+                150
+        );
+        shootButton = new Button(getContext(),
+                displayMetrics.widthPixels - 100 - 50,
+                displayMetrics.heightPixels - 100 - 100,
+                100
+        );
+
         tileMap = new TileMap(spriteSheet.getTileSprites());
         player = new Player(getContext(), START_X, START_Y, animationFactory.getPlayerAnimation());
-        leftJoystick = new Joystick(getContext(),200, 800, 150);
-        shootButton = new Button(getContext(), 1700, 800, 100);
         enemyFactory = new EnemyFactory(getContext(), tileMap.getSize(), animationFactory);
         enemies = new ArrayList<>();
         projectiles = new ArrayList<>();
@@ -328,36 +349,14 @@ public class GamePanel extends SurfaceView implements SurfaceHolder.Callback {
         if (gameOver) {
             drawGameOverInfo(canvas);
         }
-        //drawDebugInfo(canvas);
     }
 
     private void drawGameOverInfo(Canvas canvas) {
 
-        float x = displayMetrics.widthPixels / 2 - 50;
-        float y = displayMetrics.heightPixels / 2 - 50;
+        float x = displayMetrics.widthPixels / 2;
+        float y = 250;
         canvas.drawText("GAME OVER", x, y, textPaint);
-        canvas.drawText("Ghosts killed: " + deadGhosts, x, y+100, textPaint);
-        //canvas.drawText("Coins collected: " + coins, x, y + 200, paint);
+        canvas.drawText("Ghosts killed: " + deadGhosts, x, y+150, textPaint);
     }
 
-    /**
-     * Draws info for debugging.
-     * @param canvas to draw
-     */
-    private void drawDebugInfo(Canvas canvas) {
-        String[] strings = {
-                "UPS: " + gameThread.getAverageUPS(),
-                "FPS: " + gameThread.getAverageFPS(),
-                "PlayerX: " + player.getBasePositionX(),
-                "PlayerY: " + player.getBasePositionY(),
-                "DisplayX: " + displayWindow.getRect().left,
-                "DisplayY: " + displayWindow.getRect().top,
-        };
-
-        int yPos = 100;
-        for (String str : strings) {
-            canvas.drawText(str, 100, yPos, textPaint);
-            yPos += 100;
-        }
-    }
 }

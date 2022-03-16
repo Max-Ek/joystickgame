@@ -1,16 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
-    <color name="player">#FF03DAC5</color>
+    <!-- Light -->
+    <color name="lime_500">#cddc39</color>
+    <color name="lime_light">#ffff6e</color>
+    <color name="lime_dark">#99aa00</color>
+    <color name="brown_600">#6d4c41</color>
+    <color name="brown_light0">#9c786c</color>
+    <color name="brown_dark0">#40241a</color>
+
+    <!-- Dark -->
+    <color name="dark_grey">#121212</color>
+    <color name="yellow_400">#ffee58</color>
+    <color name="yellow_light">#ffff8b</color>
+    <color name="yellow_dark">#c9bc1f</color>
+    <color name="brown_300">#a1887f</color>
+    <color name="brown_light1">#d3b8ae</color>
+    <color name="brown_dark1">#725b53</color>
+
+    <!-- Game -->
     <color name="joystick_outer">#303030</color>
     <color name="joystick_inner">#909090</color>
-    <color name="shoot_button">#0000da</color>
-    <color name="shoot_button_pressed">#00008b</color>
+    <color name="shoot_button">#ffee58</color>
+    <color name="shoot_button_pressed">#c9bc1f</color>
 </resources>

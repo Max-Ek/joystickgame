@@ -18,21 +18,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.Map;
-
 import se.umu.c17mea.joystickgame.game.GameActivity;
 
 /**
+ * The start screen before starting the game.
  *
+ * @author c17mea
+ * @version 1.0
+ * @since 2022-03-16
  */
 public class MainFragment extends Fragment {
 
-
+    /** Register results of the game. */
     private ActivityResultLauncher<Intent> gameLauncher;
+
+    /** Game high score. */
     private int highScore;
 
+    /**
+     * Empty constructor required.
+     */
     public MainFragment() {
-        // Required empty public constructor
+
     }
 
     @Override
@@ -43,17 +50,17 @@ public class MainFragment extends Fragment {
 
         loadHighScore();
 
-        // Look for activity results.
+        // Look for game results.
         gameLauncher = registerForActivityResult(
                 new ActivityResultContracts.StartActivityForResult(),
                 result -> {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        // There are no request codes.
                         Intent data = result.getData();
                         if (data != null) {
                             int ghostsKilled = data.getIntExtra("ghosts", -1);
                             int coins = data.getIntExtra("coins", -1);
 
+                            // If we got results, store them in sharedPrefs.
                             if (ghostsKilled != -1) {
                                 if (ghostsKilled > highScore) {
                                     SharedPreferences sharedPref =
@@ -76,6 +83,9 @@ public class MainFragment extends Fragment {
 
     }
 
+    /**
+     * Loads the high score from SharedPrefs to the highScore field.
+     */
     public void loadHighScore() {
         SharedPreferences sharedPref = getActivity().getSharedPreferences(
                 getString(R.string.preference_file_key), Context.MODE_PRIVATE);
@@ -110,7 +120,7 @@ public class MainFragment extends Fragment {
     }
 
     /**
-     * Launches the game activity.
+     * Launches the game activity with the turbo parameter in the intent.
      */
     public void openGameActivityForResult() {
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(getContext());

@@ -7,8 +7,10 @@ import android.graphics.Paint;
 import androidx.core.content.ContextCompat;
 
 import se.umu.c17mea.joystickgame.R;
-import se.umu.c17mea.joystickgame.game.utils.VectorUtil;
 
+/**
+ * Class representing a virtual joystick.
+ */
 public class Joystick extends ControlObject {
 
     /** Size of the inner circle. */
@@ -26,7 +28,7 @@ public class Joystick extends ControlObject {
      * @param context for resources
      * @param basePositionX position
      * @param basePositionY position
-     * @param outerRadius radius
+     * @param outerRadius size
      */
     public Joystick(Context context, double basePositionX, double basePositionY, double outerRadius) {
         super(basePositionX, basePositionY, outerRadius,
@@ -39,6 +41,10 @@ public class Joystick extends ControlObject {
         innerPaint.setColor(ContextCompat.getColor(context, R.color.joystick_inner));
     }
 
+    /**
+     * Draws the joystick.
+     * @param canvas to draw on
+     */
     @Override
     public void draw(Canvas canvas) {
         canvas.drawCircle((float) basePositionX, (float) basePositionY, (float) radius, paint);
@@ -66,11 +72,18 @@ public class Joystick extends ControlObject {
         }
     }
 
+    /**
+     * Updates the inner circle position based on the actuator values.
+     */
     public void updateInnerPosition() {
         innerPosX = basePositionX + actuatorX * radius;
         innerPosY = basePositionY + actuatorY * radius;
     }
 
+    /**
+     * Sets the pressed variable (and actuator, inner position).
+     * @param bool pressed
+     */
     @Override
     public void setPressed(boolean bool) {
         pressed = bool;
