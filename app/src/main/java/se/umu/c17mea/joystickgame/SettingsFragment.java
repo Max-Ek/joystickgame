@@ -3,6 +3,7 @@ package se.umu.c17mea.joystickgame;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -27,6 +28,9 @@ public class SettingsFragment extends PreferenceFragmentCompat {
         resetButton.setOnPreferenceClickListener(preference -> {
             getContext().getSharedPreferences(getString(R.string.preference_file_key),0)
                     .edit().clear().commit();
+            // create a toast as feedback
+            Toast toast = Toast.makeText(getContext(), "Data Cleared", Toast.LENGTH_SHORT);
+            toast.show();
             return true;
         });
     }

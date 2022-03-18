@@ -7,6 +7,7 @@ import android.graphics.Paint;
 import androidx.core.content.ContextCompat;
 
 import se.umu.c17mea.joystickgame.R;
+import se.umu.c17mea.joystickgame.game.utils.VectorUtil;
 
 /**
  * Class representing a virtual joystick.
@@ -53,22 +54,23 @@ public class Joystick extends ControlObject {
 
     /**
      * Sets the joystick position.
+     * Actuators will be set to a value between -1 and 1.
      * @param x position
      * @param y position
      */
     public void setActuatorPosition(double x, double y) {
 
-        double distance = distance(x, y);
-
-        double deltaX = x - basePositionX;
-        double deltaY = y - basePositionY;
+        double distance = this.distance(x, y);
+        double[] vec = VectorUtil.toVector(basePositionX, basePositionY, x, y);
 
         if (distance > radius) { // If outside the boundary.
-            actuatorX = deltaX / distance;
-            actuatorY = deltaY / distance;
+            // Distance will always be >= the vector components.
+            actuatorX = vec[0] / distance;
+            actuatorY = vec[1] / distance;
         } else { // Inside the boundary.
-            actuatorX = deltaX / radius;
-            actuatorY = deltaY / radius;
+            // Radius will always be >= the vector components
+            actuatorX = vec[0] / radius;
+            actuatorY = vec[1] / radius;
         }
     }
 
